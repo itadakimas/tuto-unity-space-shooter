@@ -1,66 +1,60 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-
-public class ShipController : MonoBehaviour
+﻿namespace Assets.Scripts.Controllers
 {
-  [SerializeField]
-  int _speed = 0;
+  using Classes;
+  using UnityEditor;
+  using UnityEngine;
 
-  [SerializeField]
-  int _maxRotation = 20;
-
-  [SerializeField]
-  Boundary2D _boundary;
-
-  Rigidbody _rb;
-
-  void Start()
+  public class ShipController : MonoBehaviour
   {
-    _rb = gameObject.GetComponent<Rigidbody> ();
+    private Rigidbody _rb;
+
+    [SerializeField] private int _speed = 25;
+    [SerializeField] private int _maxRotation = 40;
+    [SerializeField] private Boundary2D _boundary = new Boundary2D { XMin = -6, XMax = 6, YMin = -3, YMax = 10 };
+
+    public void Start()
+    {
+      _rb = gameObject.GetComponent<Rigidbody>();
+    }
+
+    public void FixedUpdate()
+    {
+      float horizontalMove = Input.GetAxis("Horizontal");
+      float verticalMove = Input.GetAxis("Vertical");
+      Vector3 movement = new Vector3(horizontalMove, 0, verticalMove);
+
+      _rb.velocity = movement * _speed;
+
+      float xLimit = Mathf.Clamp(_rb.position.x, _boundary.XMin, _boundary.XMax);
+      float yLimit = Mathf.Clamp(_rb.position.z, _boundary.YMin, _boundary.YMax);
+
+      // NOTE: Limits Ship position to the limits of the Level
+      _rb.position = new Vector3(xLimit, 0, yLimit);
+      _rb.MoveRotation(Quaternion.Euler(0, 0, -(_maxRotation * horizontalMove)));
+    }
   }
 
-  void FixedUpdate ()
+  [CustomEditor(typeof(ShipController))]
+  public class ShipControllerEditor : Editor
   {
-    float horizontalMove = Input.GetAxis ("Horizontal");
-    float verticalMove = Input.GetAxis ("Vertical");
-    Vector3 movement = new Vector3 (horizontalMove, 0, verticalMove);
+    private SerializedProperty _boundaryProperty;
+    private SerializedProperty _maxRotationProperty;
+    private SerializedProperty _speedProperty;
 
-    _rb.velocity = movement * _speed;
-    _rb.position = new Vector3 (
-      Mathf.Clamp (_rb.position.x, _boundary.xMin, _boundary.xMax),
-      0,
-      Mathf.Clamp (_rb.position.z, _boundary.yMin, _boundary.yMax)
-    );
-    _rb.MoveRotation (Quaternion.Euler (0, 0, -(_maxRotation * horizontalMove)));
-  }
-}
+    public void OnEnable()
+    {
+      _boundaryProperty = serializedObject.FindProperty("_boundary");
+      _maxRotationProperty = serializedObject.FindProperty("_maxRotation");
+      _speedProperty = serializedObject.FindProperty("_speed");
+    }
 
-[CustomEditor(typeof(ShipController))]
-public class ShipControllerEditor : Editor
-{
-  SerializedProperty _boundaryProperty;
-  SerializedProperty _maxRotationProperty;
-  SerializedProperty _speedProperty;
-
-  void OnEnable()
-  {
-    _boundaryProperty = serializedObject.FindProperty ("_boundary");
-    _maxRotationProperty = serializedObject.FindProperty ("_maxRotation");
-    _speedProperty = serializedObject.FindProperty ("_speed");
-  }
-
-  public override void OnInspectorGUI()
-  {
-    serializedObject.Update ();
-
-    EditorGUILayout.IntSlider (_speedProperty, 0, 20, new GUIContent("Speed"));
-
-    EditorGUILayout.IntSlider (_maxRotationProperty, 0, 90, new GUIContent("Max Rotation"));
-
-    EditorGUILayout.PropertyField (_boundaryProperty, new GUIContent("Boundary 2D"), true);
-
-    serializedObject.ApplyModifiedProperties ();
+    public override void OnInspectorGUI()
+    {
+      serializedObject.Update();
+      EditorGUILayout.PropertyField(_speedProperty, new GUIContent("Speed"));
+      EditorGUILayout.IntSlider(_maxRotationProperty, 0, 90, new GUIContent("Max Rotation Degrees"));
+      EditorGUILayout.PropertyField(_boundaryProperty, new GUIContent("Boundary 2D"), true);
+      serializedObject.ApplyModifiedProperties();
+    }
   }
 }
