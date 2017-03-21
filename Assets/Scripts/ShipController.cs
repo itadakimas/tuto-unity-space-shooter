@@ -9,6 +9,9 @@ public class ShipController : MonoBehaviour
 	private int speed = 0;
 
 	[SerializeField]
+	private int maxRotation = 20;
+
+	[SerializeField]
 	private Boundary2D boundary;
 
 	private Rigidbody rb;
@@ -30,6 +33,7 @@ public class ShipController : MonoBehaviour
 			0,
 			Mathf.Clamp (rb.position.z, boundary.yMin, boundary.yMax)
 		);
+		rb.MoveRotation (Quaternion.Euler (0, 0, -(maxRotation * horizontalMove)));
 	}
 }
 
@@ -37,11 +41,13 @@ public class ShipController : MonoBehaviour
 public class ShipControllerEditor : Editor
 {
 	SerializedProperty boundaryProperty;
+	SerializedProperty maxRotationProperty;
 	SerializedProperty speedProperty;
 
 	public void OnEnable()
 	{
 		boundaryProperty = serializedObject.FindProperty ("boundary");
+		maxRotationProperty = serializedObject.FindProperty ("maxRotation");
 		speedProperty = serializedObject.FindProperty ("speed");
 	}
 
@@ -50,6 +56,8 @@ public class ShipControllerEditor : Editor
 		serializedObject.Update ();
 
 		EditorGUILayout.IntSlider (speedProperty, 0, 20, new GUIContent("Speed"));
+
+		EditorGUILayout.IntSlider (maxRotationProperty, 0, 90, new GUIContent("Max Rotation"));
 
 		EditorGUILayout.PropertyField (boundaryProperty, new GUIContent("Boundary 2D"), true);
 
