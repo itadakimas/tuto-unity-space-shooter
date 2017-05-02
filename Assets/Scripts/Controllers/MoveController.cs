@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class MovingBehaviour : MonoBehaviour
+public class MoveController : MonoBehaviour
 {
   private Rigidbody _rb;
 
@@ -14,7 +14,7 @@ public class MovingBehaviour : MonoBehaviour
   }
 }
 
-[CustomEditor(typeof(MovingBehaviour))]
+[CustomEditor(typeof(MoveController))]
 public class MovingBehaviourEditor : Editor
 {
   private SerializedProperty _speedField;

@@ -3,11 +3,27 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
-  [SerializeField] private int _fireRate = 2;
+  [SerializeField] private float _fireRate = 0.5f;
   [SerializeField] private int _poolLength = 20;
   [SerializeField] private GameObject _projectile;
 
   private List<GameObject> _projectiles;
+
+  void Fire()
+  {
+    for (int i = 0; i < _projectiles.Count; i++)
+    {
+      GameObject projectile = _projectiles[i];
+
+      if (!projectile.activeInHierarchy)
+      {
+        projectile.transform.position = gameObject.transform.position;
+        projectile.transform.rotation = gameObject.transform.rotation;
+        projectile.SetActive(true);
+        break;
+      }
+    }
+  }
 
   void InitProjectilesPool()
   {
@@ -24,5 +40,6 @@ public class CannonController : MonoBehaviour
   void Start()
   {
     InitProjectilesPool();
+    InvokeRepeating("Fire", 0, _fireRate);
   }
 }
