@@ -6,17 +6,12 @@ public class EnemiesSpawnController : MonoBehaviour
   [SerializeField] private int _poolLength = 20;
   [SerializeField] private float _maxPosX = 7;
   [SerializeField] private float _minPosX = -7;
-  [SerializeField] private float _spawnRate = 2f;
+  [SerializeField] private float _maxSpawnRate = 3f;
+  [SerializeField] private float _minSpawnRate = 0f;
   [SerializeField] private GameObject _enemy;
   [SerializeField] private GameObject _level;
 
   private List<GameObject> _enemies;
-
-  void Start()
-  {
-    InitEnemiesPool();
-    InvokeRepeating("SpawnEnemy", 0, _spawnRate);
-  }
 
   void InitEnemiesPool()
   {
@@ -39,8 +34,15 @@ public class EnemiesSpawnController : MonoBehaviour
       if (!enemy.activeInHierarchy)
       {
         enemy.SetActive(true);
+        Invoke("SpawnEnemy", Random.Range(_minSpawnRate, _maxSpawnRate));
         break;
       }
     }
+  }
+
+  void Start()
+  {
+    InitEnemiesPool();
+    SpawnEnemy();
   }
 }
