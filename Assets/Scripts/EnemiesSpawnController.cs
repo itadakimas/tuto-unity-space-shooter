@@ -9,7 +9,6 @@ public class EnemiesSpawnController : MonoBehaviour
   [SerializeField] private float _maxSpawnRate = 3f;
   [SerializeField] private float _minSpawnRate = 0f;
   [SerializeField] private GameObject _enemy;
-  [SerializeField] private GameObject _level;
 
   private List<GameObject> _enemies;
 
@@ -19,9 +18,8 @@ public class EnemiesSpawnController : MonoBehaviour
     for (int i = 0; i < _poolLength; i++)
     {
       GameObject enemy = Instantiate(_enemy);
-      Vector3 pos = gameObject.transform.position;
 
-      enemy.transform.position = new Vector3(Random.Range(_minPosX, _maxPosX), pos.y, pos.z);
+      enemy.transform.SetParent(gameObject.transform);
       enemy.SetActive(false);
       _enemies.Add(enemy);
     }
@@ -29,10 +27,13 @@ public class EnemiesSpawnController : MonoBehaviour
 
   void SpawnEnemy()
   {
+    Vector3 pos = gameObject.transform.position;
+
     foreach (GameObject enemy in _enemies)
     {
       if (!enemy.activeInHierarchy)
       {
+        enemy.transform.position = new Vector3(Random.Range(_minPosX, _maxPosX), pos.y, pos.z);
         enemy.SetActive(true);
         Invoke("SpawnEnemy", Random.Range(_minSpawnRate, _maxSpawnRate));
         break;

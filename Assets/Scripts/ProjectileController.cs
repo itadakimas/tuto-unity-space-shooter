@@ -3,6 +3,7 @@
 public class ProjectileController : MonoBehaviour
 {
   private ProjectileTypes _type;
+  private float _deactivationInterval = 2f;
 
   public ProjectileTypes Type { get; set; }
 
@@ -18,6 +19,6 @@ public class ProjectileController : MonoBehaviour
 
   void OnEnable()
   {
-    Invoke("Destroy", 2f);
+    Invoke("Destroy", _deactivationInterval);
   }
 }
