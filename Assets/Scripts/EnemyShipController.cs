@@ -22,6 +22,16 @@ public class EnemyShipController : MonoBehaviour
     Invoke("Destroy", _deactivationInterval);
   }
 
+  void OnTriggerEnter(Collider other)
+  {
+    ProjectileController projectileController = other.gameObject.GetComponent<ProjectileController>();
+
+    if (projectileController != null && projectileController.Type == ProjectileTypes.Player)
+    {
+      Debug.Log("collision with " + other.gameObject.name);
+    }
+  }
+
   void Start()
   {
     GameObject cannon = Instantiate(_cannon, transform, false);
