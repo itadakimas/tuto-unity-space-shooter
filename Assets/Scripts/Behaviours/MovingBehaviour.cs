@@ -1,38 +1,35 @@
-﻿namespace Assets.Scripts.Behaviours
+﻿using UnityEditor;
+using UnityEngine;
+
+public class MovingBehaviour : MonoBehaviour
 {
-  using UnityEditor;
-  using UnityEngine;
+  private Rigidbody _rb;
 
-  public class MovingBehaviour : MonoBehaviour
+  [SerializeField] private int _speed = 20;
+
+  public void Start ()
   {
-    private Rigidbody _rb;
+    _rb = gameObject.GetComponent<Rigidbody> ();
+    _rb.velocity = new Vector3 (0, 0, 1) * _speed;
+  }
+}
 
-    [SerializeField] private int _speed = 20;
+[CustomEditor(typeof(MovingBehaviour))]
+public class MovingBehaviourEditor : Editor
+{
+  private SerializedProperty _speedField;
 
-    public void Start ()
-    {
-      _rb = gameObject.GetComponent<Rigidbody> ();
-      _rb.velocity = new Vector3 (0, 0, 1) * _speed;
-    }
+  public void OnEnable()
+  {
+    _speedField = serializedObject.FindProperty ("_speed");
   }
 
-  [CustomEditor(typeof(MovingBehaviour))]
-  public class MovingBehaviourEditor : Editor
+  public override void OnInspectorGUI()
   {
-    private SerializedProperty _speedField;
+    serializedObject.Update ();
 
-    public void OnEnable()
-    {
-      _speedField = serializedObject.FindProperty ("_speed");
-    }
+    EditorGUILayout.IntSlider (_speedField, 0, 30, new GUIContent("Speed"));
 
-    public override void OnInspectorGUI()
-    {
-      serializedObject.Update ();
-
-      EditorGUILayout.IntSlider (_speedField, 0, 30, new GUIContent("Speed"));
-
-      serializedObject.ApplyModifiedProperties ();
-    }
+    serializedObject.ApplyModifiedProperties ();
   }
 }
