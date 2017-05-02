@@ -2,6 +2,10 @@
 
 public class ProjectileController : MonoBehaviour
 {
+  private ProjectileTypes _type;
+
+  public ProjectileTypes Type { get; set; }
+
   void Destroy()
   {
     gameObject.SetActive(false);

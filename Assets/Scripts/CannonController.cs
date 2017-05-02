@@ -35,9 +35,12 @@ public class CannonController : MonoBehaviour
     {
       GameObject projectile = Instantiate(_projectile, transform);
       MoveController moveController = projectile.GetComponent<MoveController>();
+      ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
       Vector3 direction = _isEnemyCannon ? Vector3.back : Vector3.forward;
+      ProjectileTypes projectileType = _isEnemyCannon ? ProjectileTypes.Enemy : ProjectileTypes.Player;
 
       moveController.SetDirection(direction);
+      projectileController.Type = projectileType;
       projectile.SetActive(false);
       _projectiles.Add(projectile);
     }
