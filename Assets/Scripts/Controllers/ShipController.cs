@@ -25,8 +25,7 @@ public class ShipController : MonoBehaviour
     float xLimit = Mathf.Clamp(_rb.position.x, _boundary.XMin, _boundary.XMax);
     float yLimit = Mathf.Clamp(_rb.position.z, _boundary.YMin, _boundary.YMax);
 
-    // NOTE: Limits Ship position to the limits of the Level
-    _rb.position = new Vector3(xLimit, 0, yLimit);
+    _rb.position = new Vector3(xLimit, 0, yLimit); // NOTE: Limits Ship position to the limits of the Level
     _rb.MoveRotation(Quaternion.Euler(0, 0, -(_maxRotation * horizontalMove)));
   }
 }

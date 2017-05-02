@@ -7,6 +7,8 @@ public class CannonController : MonoBehaviour
   [SerializeField] private int _poolLength = 20;
   [SerializeField] private GameObject _projectile;
 
+  private float _nextShotInterval = 0;
+  private float _secondsElapsed = 0;
   private List<GameObject> _projectiles;
 
   void Fire()
@@ -40,6 +42,15 @@ public class CannonController : MonoBehaviour
   void Start()
   {
     InitProjectilesPool();
-    InvokeRepeating("Fire", 0, _fireRate);
+  }
+
+  void Update()
+  {
+    _secondsElapsed = _secondsElapsed + Time.deltaTime;
+    if (Input.GetButton("Fire1") && _secondsElapsed > _nextShotInterval)
+    {
+      _nextShotInterval = _secondsElapsed + _fireRate;
+      Fire();
+    }
   }
 }
