@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
+  [SerializeField] private bool _isEnemyCannon = true;
   [SerializeField] private float _fireRate = 0.5f;
   [SerializeField] private int _poolLength = 20;
   [SerializeField] private GameObject _projectile;
 
-  private float _nextShotInterval = 0;
-  private float _secondsElapsed = 0;
+  private float _nextShotInterval;
+  private float _secondsElapsed;
   private List<GameObject> _projectiles;
 
   void Fire()
@@ -33,7 +34,10 @@ public class CannonController : MonoBehaviour
     for (int i = 0; i < _poolLength; i++)
     {
       GameObject projectile = Instantiate(_projectile, transform);
+      MoveController moveController = projectile.GetComponent<MoveController>();
+      Vector3 direction = _isEnemyCannon ? Vector3.back : Vector3.forward;
 
+      moveController.SetDirection(direction);
       projectile.SetActive(false);
       _projectiles.Add(projectile);
     }
@@ -42,12 +46,16 @@ public class CannonController : MonoBehaviour
   void Start()
   {
     InitProjectilesPool();
+    if (_isEnemyCannon)
+    {
+      InvokeRepeating("Fire", 0, _fireRate);
+    }
   }
 
   void Update()
   {
     _secondsElapsed = _secondsElapsed + Time.deltaTime;
-    if (Input.GetButton("Fire1") && _secondsElapsed > _nextShotInterval)
+    if (!_isEnemyCannon && Input.GetButton("Fire1") && _secondsElapsed > _nextShotInterval)
     {
       _nextShotInterval = _secondsElapsed + _fireRate;
       Fire();

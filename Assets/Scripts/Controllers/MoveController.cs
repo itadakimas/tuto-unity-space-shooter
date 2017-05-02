@@ -1,35 +1,20 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveController : MonoBehaviour
 {
   private Rigidbody _rb;
 
-  [SerializeField] private int _speed = 20;
+  [SerializeField] private float _speed = 20;
+  [SerializeField] private Vector3 _direction;
 
-  public void Start ()
+  public void SetDirection(Vector3 direction)
+  {
+    _direction = direction;
+  }
+
+  void Start ()
   {
     _rb = gameObject.GetComponent<Rigidbody> ();
-    _rb.velocity = new Vector3 (0, 0, 1) * _speed;
-  }
-}
-
-[CustomEditor(typeof(MoveController))]
-public class MovingBehaviourEditor : Editor
-{
-  private SerializedProperty _speedField;
-
-  public void OnEnable()
-  {
-    _speedField = serializedObject.FindProperty ("_speed");
-  }
-
-  public override void OnInspectorGUI()
-  {
-    serializedObject.Update ();
-
-    EditorGUILayout.IntSlider (_speedField, 0, 30, new GUIContent("Speed"));
-
-    serializedObject.ApplyModifiedProperties ();
+    _rb.velocity = _direction * _speed;
   }
 }
