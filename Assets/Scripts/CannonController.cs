@@ -41,6 +41,7 @@ public class CannonController : MonoBehaviour
 
       moveController.SetDirection(direction);
       projectileController.Type = projectileType;
+      projectile.name = _isEnemyCannon ? "enemyProjectile" : "playerProjectile";
       projectile.SetActive(false);
       _projectiles.Add(projectile);
     }

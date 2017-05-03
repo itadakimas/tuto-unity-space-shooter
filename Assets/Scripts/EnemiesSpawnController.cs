@@ -19,6 +19,7 @@ public class EnemiesSpawnController : MonoBehaviour
     {
       GameObject enemy = Instantiate(_enemy);
 
+      enemy.name = "enemy";
       enemy.transform.SetParent(gameObject.transform);
       enemy.SetActive(false);
       _enemies.Add(enemy);
