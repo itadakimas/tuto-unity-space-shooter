@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed4548a6a58d4997bf3cbf27b5c26d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolLength: 10
+  _poolLength: 15
   _maxPosX: 7
   _minPosX: -7
   _maxSpawnRate: 1

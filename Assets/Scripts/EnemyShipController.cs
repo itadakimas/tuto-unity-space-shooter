@@ -2,12 +2,12 @@
 
 public class EnemyShipController : MonoBehaviour
 {
+  [SerializeField] private float _deactivationInterval;
   [SerializeField] private float _explosionDuration;
   [SerializeField] private GameObject _cannon;
   [SerializeField] private GameObject _explosion;
   [SerializeField] private GameObject _reactor;
 
-  private float _deactivationInterval = 20f;
   private GameObject _explosionInstance;
 
   void Destroy()

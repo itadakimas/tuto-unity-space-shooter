@@ -35,10 +35,10 @@ public class EnemiesSpawnController : MonoBehaviour
       {
         enemy.transform.position = new Vector3(Random.Range(_minPosX, _maxPosX), pos.y, pos.z);
         enemy.SetActive(true);
-        Invoke("SpawnEnemy", Random.Range(_minSpawnRate, _maxSpawnRate));
         break;
       }
     }
+    Invoke("SpawnEnemy", Random.Range(_minSpawnRate, _maxSpawnRate));
   }
 
   void Start()
