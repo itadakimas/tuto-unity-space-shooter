@@ -2,13 +2,17 @@
 
 public class EnemyShipController : MonoBehaviour
 {
+  [SerializeField] private float _explosionDuration;
   [SerializeField] private GameObject _cannon;
+  [SerializeField] private GameObject _explosion;
   [SerializeField] private GameObject _reactor;
 
   private float _deactivationInterval = 20f;
+  private GameObject _explosionInstance;
 
   void Destroy()
   {
+    _explosionInstance.SetActive(false);
     gameObject.SetActive(false);
   }
 
@@ -28,16 +32,16 @@ public class EnemyShipController : MonoBehaviour
 
     if (projectileController != null && projectileController.Type == ProjectileTypes.Player)
     {
-      Debug.Log("collision with " + other.gameObject.name);
+      _explosionInstance.SetActive(true);
+      Invoke("Destroy", _explosionDuration);
     }
   }
 
   void Start()
   {
-    GameObject cannon = Instantiate(_cannon, transform, false);
-    GameObject reactor = Instantiate(_reactor, transform, false);
-
-    cannon.transform.SetParent(transform, false);
-    reactor.transform.SetParent(transform, false);
+    _explosionInstance = Instantiate(_explosion, transform, false);
+    _explosionInstance.SetActive(false);
+    Instantiate(_cannon, transform, false);
+    Instantiate(_reactor, transform, false);
   }
 }
