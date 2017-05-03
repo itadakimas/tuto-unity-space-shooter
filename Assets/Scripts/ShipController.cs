@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
@@ -27,29 +26,5 @@ public class ShipController : MonoBehaviour
 
     _rb.position = new Vector3(xLimit, 0, yLimit); // NOTE: Limits Ship position to the limits of the Level
     _rb.MoveRotation(Quaternion.Euler(0, 0, -(_maxRotation * horizontalMove)));
-  }
-}
-
-[CustomEditor(typeof(ShipController))]
-public class ShipControllerEditor : Editor
-{
-  private SerializedProperty _boundaryProperty;
-  private SerializedProperty _maxRotationProperty;
-  private SerializedProperty _speedProperty;
-
-  public void OnEnable()
-  {
-    _boundaryProperty = serializedObject.FindProperty("_boundary");
-    _maxRotationProperty = serializedObject.FindProperty("_maxRotation");
-    _speedProperty = serializedObject.FindProperty("_speed");
-  }
-
-  public override void OnInspectorGUI()
-  {
-    serializedObject.Update();
-    EditorGUILayout.PropertyField(_speedProperty, new GUIContent("Speed"));
-    EditorGUILayout.IntSlider(_maxRotationProperty, 0, 90, new GUIContent("Max Rotation Degrees"));
-    EditorGUILayout.PropertyField(_boundaryProperty, new GUIContent("Boundary 2D"), true);
-    serializedObject.ApplyModifiedProperties();
   }
 }
