@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnemyCannon: 1
-  _fireRate: 1.5
+  _fireRate: 1
   _poolLength: 10
   _projectile: {fileID: 1473129071526612, guid: 68c082a560145aa45b9d52a47bc14f57,
     type: 2}
