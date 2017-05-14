@@ -1,8 +1,8 @@
 ﻿public class PlayerStore : Store<PlayerStore>, IObservable
 {
-  private int _score;
-  private int _health;
-  private int _maxHealth;
+  private float _score;
+  private float _health;
+  private float _maxHealth;
 
   public PlayerStore()
   {
@@ -11,20 +11,22 @@
     _health = _maxHealth;
   }
 
-  public void IncreaseScore(int points)
+  public float GetHealthRate()
+  {
+    return _health / _maxHealth;
+  }
+
+  public void IncreaseScore(float points)
   {
     _score += points;
     Notify("score:updated");
   }
 
-  public void DecreaseHealth(int damage)
+  public void DecreaseHealth(float damage)
   {
     _health -= damage;
-    if (_health > 0)
-    {
-      Notify("health:decreased");
-    }
-    else
+    Notify("health:decreased");
+    if (_health <= 0)
     {
       Notify("health:none");
     }
