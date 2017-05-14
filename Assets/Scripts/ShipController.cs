@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 
-public class ShipController : MonoBehaviour
+public class ShipController : MonoBehaviour, IObserver
 {
   private Rigidbody _rb;
+  private PlayerStore _player;
 
   [SerializeField] private int _speed = 25;
   [SerializeField] private int _maxRotation = 40;
   [SerializeField] private Boundary2D _boundary = new Boundary2D { XMin = -6, XMax = 6, YMin = -3, YMax = 10 };
+
+  public void OnNotification(string message, IObservable emitter)
+  {
+    if (message == "health:none")
+    {
+      gameObject.SetActive(false);
+    }
+  }
 
   void FixedUpdate()
   {
@@ -27,12 +36,14 @@ public class ShipController : MonoBehaviour
   {
     if (other.name == "enemyProjectile" || other.name == "enemy")
     {
-      gameObject.SetActive(false);
+      _player.DecreaseHealth(10);
     }
   }
 
   void Start()
   {
     _rb = gameObject.GetComponent<Rigidbody>();
+    _player = PlayerStore.GetInstance();
+    _player.AddObserver(this);
   }
 }
