@@ -18,7 +18,9 @@ public class EnemiesSpawnController : MonoBehaviour
     for (int i = 0; i < _poolLength; i++)
     {
       GameObject enemy = Instantiate(_enemy);
+      EnemyShipController enemyController = enemy.GetComponent<EnemyShipController>();
 
+      enemyController.Level = 1;
       enemy.name = "enemy";
       enemy.transform.SetParent(gameObject.transform);
       enemy.SetActive(false);

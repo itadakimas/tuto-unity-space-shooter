@@ -76,6 +76,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33063755860956172
 MeshFilter:
@@ -123,6 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1bf836ffee54c32b64919d829ebd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _basePoints: 100
+  _level: 0
   _deactivationInterval: 10
   _explosionDuration: 0.15
   _cannon: {fileID: 1870687309618328, guid: d560def4101f74ec9a8466dff8f95b97, type: 2}
