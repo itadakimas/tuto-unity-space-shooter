@@ -32,6 +32,11 @@ public class HUDController : MonoBehaviour, IObserver
     }
   }
 
+  private void OnDestroy()
+  {
+    _player.RemoveObserver(this);
+  }
+
   private void Start ()
   {
     _healthBarInstance = Instantiate(_healthBar);

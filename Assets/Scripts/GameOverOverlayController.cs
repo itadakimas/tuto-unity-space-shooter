@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverOverlayController : MonoBehaviour, IObserver
@@ -29,10 +30,15 @@ public class GameOverOverlayController : MonoBehaviour, IObserver
     }
   }
 
-  private void OnRestartButtonClick()
+  private void OnDestroy()
   {
     _player.Reset();
-    gameObject.SetActive(false);
+    _player.RemoveObserver(this);
+  }
+
+  private void OnRestartButtonClick()
+  {
+    SceneManager.LoadScene("Game");
   }
 
   private void Start ()

@@ -71,6 +71,11 @@ public class ShipController : MonoBehaviour, IObserver
     _rb.MoveRotation(Quaternion.Euler(0, 0, -(_maxRotation * horizontalMove)));
   }
 
+  private void OnDestroy()
+  {
+    _player.RemoveObserver(this);
+  }
+
   private void OnDisable()
   {
     CancelInvoke("Destroy");
