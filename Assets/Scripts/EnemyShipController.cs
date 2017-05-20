@@ -45,7 +45,7 @@ public class EnemyShipController : MonoBehaviour
   {
     ProjectileController projectileController = other.gameObject.GetComponent<ProjectileController>();
 
-    if (projectileController != null && projectileController.Type == ProjectileTypes.Player)
+    if (projectileController != null && projectileController.Type == ProjectileTypes.Player && _player.IsAlive())
     {
       _explosionInstance.SetActive(true);
       _player.IncreaseScore(_level * _basePoints);

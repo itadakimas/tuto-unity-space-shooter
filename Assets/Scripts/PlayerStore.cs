@@ -10,6 +10,21 @@
     Init();
   }
 
+  public void DecreaseHealth(float damage)
+  {
+    if (_destroyed)
+    {
+      return;
+    }
+    _health -= damage;
+    Notify("health:decreased");
+    if (_health <= 0)
+    {
+      _destroyed = true;
+      Notify("health:none");
+    }
+  }
+
   public float GetHealthRate()
   {
     return _health / _maxHealth;
@@ -26,19 +41,9 @@
     Notify("score:updated");
   }
 
-  public void DecreaseHealth(float damage)
+  public bool IsAlive()
   {
-    if (_destroyed)
-    {
-      return;
-    }
-    _health -= damage;
-    Notify("health:decreased");
-    if (_health <= 0)
-    {
-      _destroyed = true;
-      Notify("health:none");
-    }
+    return _health > 0;
   }
 
   public void Reset()
