@@ -75,6 +75,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33101442554095284
 MeshFilter:
@@ -116,6 +117,8 @@ MonoBehaviour:
     XMax: 7
     YMin: -3
     YMax: 10
+  _cannon: {fileID: 1748886304610556, guid: a65aec87fd3dc4b59b3f1afadad7501a, type: 2}
+  _reactor: {fileID: 1077917632623706, guid: 99af4d54aa1e540679e4eaae5b78468a, type: 2}
 --- !u!136 &136745994903681540
 CapsuleCollider:
   m_ObjectHideFlags: 1

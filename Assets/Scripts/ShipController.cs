@@ -2,12 +2,16 @@
 
 public class ShipController : MonoBehaviour, IObserver
 {
+  private GameObject _cannonInstance;
+  private GameObject _reactorInstance;
   private Rigidbody _rb;
   private PlayerStore _player;
 
   [SerializeField] private int _speed = 25;
   [SerializeField] private int _maxRotation = 40;
   [SerializeField] private Boundary2D _boundary = new Boundary2D { XMin = -6, XMax = 6, YMin = -3, YMax = 10 };
+  [SerializeField] private GameObject _cannon;
+  [SerializeField] private GameObject _reactor;
 
   public void OnNotification(string message, IObservable emitter)
   {
@@ -42,7 +46,14 @@ public class ShipController : MonoBehaviour, IObserver
 
   void Start()
   {
+    _cannonInstance = Instantiate(_cannon);
+    _cannonInstance.transform.SetParent(transform);
+
+    _reactorInstance = Instantiate(_reactor);
+    _reactorInstance.transform.SetParent(transform);
+
     _rb = gameObject.GetComponent<Rigidbody>();
+
     _player = PlayerStore.GetInstance();
     _player.AddObserver(this);
   }
