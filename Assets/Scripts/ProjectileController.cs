@@ -7,17 +7,17 @@ public class ProjectileController : MonoBehaviour
 
   public ProjectileTypes Type { get; set; }
 
-  void Destroy()
+  private void Destroy()
   {
     gameObject.SetActive(false);
   }
 
-  void OnDisable()
+  private void OnDisable()
   {
     CancelInvoke();
   }
 
-  void OnEnable()
+  private void OnEnable()
   {
     Invoke("Destroy", _deactivationInterval);
   }

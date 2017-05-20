@@ -61,7 +61,7 @@ public class ShipController : MonoBehaviour, IObserver
     _rb.MoveRotation(Quaternion.Euler(0, 0, -(_maxRotation * horizontalMove)));
   }
 
-  void OnTriggerEnter(Collider other)
+  private void OnTriggerEnter(Collider other)
   {
     if (other.name == "enemyProjectile" || other.name == "enemy")
     {
@@ -69,7 +69,7 @@ public class ShipController : MonoBehaviour, IObserver
     }
   }
 
-  void Start()
+  private void Start()
   {
     _cannonInstance = Instantiate(_cannon);
     _cannonInstance.transform.SetParent(transform);

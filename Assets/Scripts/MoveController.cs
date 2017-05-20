@@ -12,7 +12,7 @@ public class MoveController : MonoBehaviour
     _direction = direction;
   }
 
-  void Start ()
+  private void Start ()
   {
     _rb = gameObject.GetComponent<Rigidbody> ();
     _rb.velocity = _direction * _speed;

@@ -14,7 +14,7 @@ public class HealthBarController : MonoBehaviour, IObserver
     }
   }
 
-  void Start ()
+  private void Start ()
   {
     _image = gameObject.GetComponent<Image>();
     _player = PlayerStore.GetInstance();

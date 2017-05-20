@@ -12,7 +12,7 @@ public class CannonController : MonoBehaviour
   private float _secondsElapsed;
   private List<GameObject> _projectiles;
 
-  void Fire()
+  private void Fire()
   {
     for (int i = 0; i < _projectiles.Count; i++)
     {
@@ -28,7 +28,7 @@ public class CannonController : MonoBehaviour
     }
   }
 
-  void InitProjectilesPool()
+  private void InitProjectilesPool()
   {
     _projectiles = new List<GameObject>();
     for (int i = 0; i < _poolLength; i++)
@@ -47,7 +47,7 @@ public class CannonController : MonoBehaviour
     }
   }
 
-  void Start()
+  private void Start()
   {
     InitProjectilesPool();
     if (_isEnemyCannon)
@@ -56,7 +56,7 @@ public class CannonController : MonoBehaviour
     }
   }
 
-  void Update()
+  private void Update()
   {
     _secondsElapsed = _secondsElapsed + Time.deltaTime;
     if (!_isEnemyCannon && Input.GetButton("Fire1") && _secondsElapsed > _nextShotInterval)

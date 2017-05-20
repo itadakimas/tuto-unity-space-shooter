@@ -25,23 +25,23 @@ public class EnemyShipController : MonoBehaviour
     }
   }
 
-  void Destroy()
+  private void Destroy()
   {
     _explosionInstance.SetActive(false);
     gameObject.SetActive(false);
   }
 
-  void OnDisable()
+  private void OnDisable()
   {
     CancelInvoke();
   }
 
-  void OnEnable()
+  private void OnEnable()
   {
     Invoke("Destroy", _deactivationInterval);
   }
 
-  void OnTriggerEnter(Collider other)
+  private void OnTriggerEnter(Collider other)
   {
     ProjectileController projectileController = other.gameObject.GetComponent<ProjectileController>();
 
@@ -53,7 +53,7 @@ public class EnemyShipController : MonoBehaviour
     }
   }
 
-  void Start()
+  private void Start()
   {
     _player = PlayerStore.GetInstance();
     _explosionInstance = Instantiate(_explosion, transform, false);

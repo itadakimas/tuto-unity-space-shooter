@@ -12,7 +12,7 @@ public class EnemiesSpawnController : MonoBehaviour
 
   private List<GameObject> _enemies;
 
-  void InitEnemiesPool()
+  private void InitEnemiesPool()
   {
     _enemies = new List<GameObject>();
     for (int i = 0; i < _poolLength; i++)
@@ -28,7 +28,7 @@ public class EnemiesSpawnController : MonoBehaviour
     }
   }
 
-  void SpawnEnemy()
+  private void SpawnEnemy()
   {
     Vector3 pos = gameObject.transform.position;
 
@@ -44,7 +44,7 @@ public class EnemiesSpawnController : MonoBehaviour
     Invoke("SpawnEnemy", Random.Range(_minSpawnRate, _maxSpawnRate));
   }
 
-  void Start()
+  private void Start()
   {
     InitEnemiesPool();
     SpawnEnemy();

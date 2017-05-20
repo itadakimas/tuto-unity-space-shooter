@@ -14,7 +14,7 @@ public class ScoreController : MonoBehaviour, IObserver
     }
   }
 
-  void Start ()
+  private void Start ()
   {
     _player = PlayerStore.GetInstance();
     _text = gameObject.GetComponent<Text>();
