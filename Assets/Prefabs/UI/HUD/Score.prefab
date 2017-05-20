@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114532753112673816}
   - component: {fileID: 114189214244488486}
   m_Layer: 0
-  m_Name: HUD_Score
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
