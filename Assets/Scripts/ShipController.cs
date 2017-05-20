@@ -5,15 +5,18 @@ public class ShipController : MonoBehaviour, IObserver
 {
   private bool _isTakingDamage = false;
   private GameObject _cannonInstance;
+  private GameObject _explosionInstance;
   private GameObject _reactorInstance;
   private Renderer _renderer;
   private Rigidbody _rb;
   private PlayerStore _player;
 
+  [SerializeField] private float _explosionDuration;
   [SerializeField] private int _speed = 25;
   [SerializeField] private int _maxRotation = 40;
   [SerializeField] private Boundary2D _boundary = new Boundary2D { XMin = -6, XMax = 6, YMin = -3, YMax = 10 };
   [SerializeField] private GameObject _cannon;
+  [SerializeField] private GameObject _explosion;
   [SerializeField] private GameObject _reactor;
 
   public void OnNotification(string message, IObservable emitter)
@@ -28,7 +31,8 @@ public class ShipController : MonoBehaviour, IObserver
     }
     if (message == "health:none")
     {
-      gameObject.SetActive(false);
+      _explosionInstance.SetActive(true);
+      Invoke("Destroy", _explosionDuration);
     }
   }
 
@@ -46,6 +50,12 @@ public class ShipController : MonoBehaviour, IObserver
     _isTakingDamage = false;
   }
 
+  private void Destroy()
+  {
+    gameObject.SetActive(false);
+    _explosionInstance.SetActive(false);
+  }
+
   private void FixedUpdate()
   {
     float horizontalMove = Input.GetAxis("Horizontal");
@@ -61,6 +71,11 @@ public class ShipController : MonoBehaviour, IObserver
     _rb.MoveRotation(Quaternion.Euler(0, 0, -(_maxRotation * horizontalMove)));
   }
 
+  private void OnDisable()
+  {
+    CancelInvoke("Destroy");
+  }
+
   private void OnTriggerEnter(Collider other)
   {
     if (other.name == "enemyProjectile" || other.name == "enemy")
@@ -73,6 +88,9 @@ public class ShipController : MonoBehaviour, IObserver
   {
     _cannonInstance = Instantiate(_cannon);
     _cannonInstance.transform.SetParent(transform);
+    _explosionInstance = Instantiate(_explosion);
+    _explosionInstance.transform.SetParent(transform);
+    _explosionInstance.SetActive(false);
     _reactorInstance = Instantiate(_reactor);
     _reactorInstance.transform.SetParent(transform);
     _renderer = gameObject.GetComponent<Renderer>();

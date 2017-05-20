@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68152baffffe4c38804eedd9b635d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionDuration: 0.2
   _speed: 20
   _maxRotation: 40
   _boundary:
@@ -118,6 +119,7 @@ MonoBehaviour:
     YMin: -3
     YMax: 10
   _cannon: {fileID: 1748886304610556, guid: a65aec87fd3dc4b59b3f1afadad7501a, type: 2}
+  _explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
   _reactor: {fileID: 1077917632623706, guid: 99af4d54aa1e540679e4eaae5b78468a, type: 2}
 --- !u!136 &136745994903681540
 CapsuleCollider:
