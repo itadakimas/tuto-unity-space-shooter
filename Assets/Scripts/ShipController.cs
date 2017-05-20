@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class ShipController : MonoBehaviour, IObserver
 {
+  private bool _isTakingDamage = false;
   private GameObject _cannonInstance;
   private GameObject _reactorInstance;
+  private Renderer _renderer;
   private Rigidbody _rb;
   private PlayerStore _player;
 
@@ -15,13 +18,35 @@ public class ShipController : MonoBehaviour, IObserver
 
   public void OnNotification(string message, IObservable emitter)
   {
+    if (message == "health:decreased")
+    {
+      if (!_isTakingDamage)
+      {
+        _isTakingDamage = true;
+        StartCoroutine(Blink(0.2f, 0.1f));
+      }
+    }
     if (message == "health:none")
     {
       gameObject.SetActive(false);
     }
   }
 
-  void FixedUpdate()
+  private IEnumerator Blink(float duration, float delay)
+  {
+    while (duration > 0)
+    {
+      duration -= Time.deltaTime;
+      _renderer.enabled = !_renderer.enabled;
+      _reactorInstance.SetActive(!_reactorInstance.activeInHierarchy);
+      yield return new WaitForSeconds(delay);
+    }
+    _renderer.enabled = true;
+    _reactorInstance.SetActive(true);
+    _isTakingDamage = false;
+  }
+
+  private void FixedUpdate()
   {
     float horizontalMove = Input.GetAxis("Horizontal");
     float verticalMove = Input.GetAxis("Vertical");
@@ -48,12 +73,10 @@ public class ShipController : MonoBehaviour, IObserver
   {
     _cannonInstance = Instantiate(_cannon);
     _cannonInstance.transform.SetParent(transform);
-
     _reactorInstance = Instantiate(_reactor);
     _reactorInstance.transform.SetParent(transform);
-
+    _renderer = gameObject.GetComponent<Renderer>();
     _rb = gameObject.GetComponent<Rigidbody>();
-
     _player = PlayerStore.GetInstance();
     _player.AddObserver(this);
   }
