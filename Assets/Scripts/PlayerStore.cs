@@ -7,10 +7,7 @@
 
   public PlayerStore()
   {
-    _destroyed = false;
-    _score = 0;
-    _maxHealth = 100;
-    _health = _maxHealth;
+    Init();
   }
 
   public float GetHealthRate()
@@ -42,5 +39,19 @@
       _destroyed = true;
       Notify("health:none");
     }
+  }
+
+  public void Reset()
+  {
+    Init();
+    Notify("player:reset");
+  }
+
+  private void Init()
+  {
+    _destroyed = false;
+    _score = 0;
+    _maxHealth = 100;
+    _health = _maxHealth;
   }
 }

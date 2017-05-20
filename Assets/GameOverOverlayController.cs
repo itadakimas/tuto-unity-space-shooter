@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class GameOverOverlayController : MonoBehaviour, IObserver
 {
+  private Button _replayButtonBtnComponent;
   private GameObject _canvasInstance;
   private GameObject _eventSystemInstance;
   private GameObject _panelInstance;
@@ -28,6 +29,12 @@ public class GameOverOverlayController : MonoBehaviour, IObserver
     }
   }
 
+  private void OnRestartButtonClick()
+  {
+    _player.Reset();
+    gameObject.SetActive(false);
+  }
+
   private void Start ()
   {
     gameObject.SetActive(false);
@@ -46,5 +53,7 @@ public class GameOverOverlayController : MonoBehaviour, IObserver
     _titleInstance.transform.SetParent(_panelInstance.transform, false);
     _player = PlayerStore.GetInstance();
     _player.AddObserver(this);
+    _replayButtonBtnComponent = _replayButtonInstance.GetComponent<Button>();
+    _replayButtonBtnComponent.onClick.AddListener(() => OnRestartButtonClick());
   }
 }
