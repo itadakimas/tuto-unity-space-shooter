@@ -51,5 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d898c3a91b0bde14f83b4dca8d6d970b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 1580198873464500, guid: 1d10a2890f68b0e4cb81b2474adbf872, type: 2}
-  _score: {fileID: 1804554590289978, guid: 94e66d5584edaf74db54c099c19533bf, type: 2}
+  _healthBar: {fileID: 1951079399924282, guid: 1d10a2890f68b0e4cb81b2474adbf872, type: 2}
+  _healthBarBackground: {fileID: 1239855087667600, guid: 69b5d2932a4dba24ca5be518738c56a7,
+    type: 2}
+  _healthBarForeground: {fileID: 1805767037663010, guid: 6add3c7d78d2e0d49859dd15bba695a8,
+    type: 2}
+  _score: {fileID: 1982005358561304, guid: f05e30cc4e09d254a816e50ef060612a, type: 2}
+  _scoreLabel: {fileID: 1209216432793398, guid: 43b748911de5105418257434a4384e9b,
+    type: 2}
+  _scoreValue: {fileID: 1494560530184064, guid: e00077206e16caf418a69f87364a0b28,
+    type: 2}
